@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewporthead" content="width=device-width, initial-scale=1.0" />
+        <title>HTML页面转换成PDF导出</title>
+
+        <style>
+            .print_wrapper {
+                padding: 10px;
+                width: 886px;
+                margin-left: 50%;
+                transform: translateX(-50%);
+            }
+            .header {
+                font-size: 30px;
+                font-weight: 600;
+                text-align: center;
+            }
+            .sub_wrapper {
+                padding: 10px;
+                margin-top: 10px;
+            }
+            .sub_row {
+                display: flex;
+                flex-direction: row;
+                line-height: 40px;
+            }
+            .sub_row_item {
+                flex: 1;
+                height: 100%;
+                text-align: center;
+            }
+            button {
+                padding: 10px;
+                border-radius: 3px;
+                background-color: #2775b6;
+                border: 0;
+                color: #fff;
+            }
+            .operator {
+                padding: 10px;
+            }
+            .attachment_title {
+                font-size: 26px;
+                font-weight: 600;
+                margin: 20px 0;
+            }
+            table {
+                border: #000;
+                border-spacing: 0px;
+            }
+            tr {
+                height: 40px;
+            }
+            td {
+                text-align: center;
+                vertical-align: middle;
+                padding: 5px;
+            }
+            .img {
+                width: 200px;
+                height: 200px;
+                overflow: hidden;
+                margin-top: 2px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="operator">
+            <button id="fillData">填充数据</button>
+            <button id="exportPdf">导出为PDF</button>
+        </div>
+        <div class="print_wrapper">
+            <div id="main" class="main">
+                <div class="container">
+                    <div class="header">
+                        <span>测试标题</span>
+                    </div>
+                    <div class="sub_wrapper">
+                        <div class="sub_row">
+                            <div class="sub_row_item">
+                                <span>姓名:</span>
+                                <span>ZmSama</span>
+                            </div>
+                            <div class="sub_row_item">
+                                <span>性别:</span>
+                                <span>男</span>
+                            </div>
+                            <div class="sub_row_item">
+                                <span>居住地址:</span>
+                                <span>广东省惠州市惠城区</span>
+                            </div>
+                        </div>
+                        <div class="sub_row">
+                            <div class="sub_row_item">
+                                <span>姓名:</span>
+                                <span>ZmSama</span>
+                            </div>
+                            <div class="sub_row_item">
+                                <span>性别:</span>
+                                <span>男</span>
+                            </div>
+                            <div class="sub_row_item">
+                                <span>居住地址:</span>
+                                <span>广东省惠州市惠城区</span>
+                            </div>
+                        </div>
+                        <div class="sub_row">
+                            <div class="sub_row_item">
+                                <span>姓名:</span>
+                                <span>ZmSama</span>
+                            </div>
+                            <div class="sub_row_item">
+                                <span>性别:</span>
+                                <span>男</span>
+                            </div>
+                            <div class="sub_row_item">
+                                <span>居住地址:</span>
+                                <span>广东省惠州市惠城区</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="attachment_wrapper">
+                        <div class="attachment_title">
+                            <span>附件清单一</span>
+                        </div>
+                        <table width="100%" border="1" cellspacing="0" cellpadding="0">
+                            <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>物料编号</th>
+                                    <th>物料名称</th>
+                                    <th>单位</th>
+                                    <th>数量</th>
+                                    <th>单价</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table1">
+                                <tr>
+                                    <td>1</td>
+                                    <td>10000000001</td>
+                                    <td>R5 7500F</td>
+                                    <td>PCS</td>
+                                    <td>1</td>
+                                    <td>1099</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="attachment_wrapper">
+                        <div class="attachment_title">
+                            <span>附件清单二</span>
+                        </div>
+                        <table width="100%" border="1" cellspacing="0" cellpadding="0">
+                            <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>物料编号</th>
+                                    <th>物料名称</th>
+                                    <th>单位</th>
+                                    <th>数量</th>
+                                    <th>单价</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table2">
+                                <tr>
+                                    <td>1</td>
+                                    <td>10000000001</td>
+                                    <td>R5 7500F</td>
+                                    <td>PCS</td>
+                                    <td>1</td>
+                                    <td>1099</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="attachment_wrapper">
+                        <div class="attachment_title">
+                            <span>附件清单三</span>
+                        </div>
+                        <table width="100%" border="1" cellspacing="0" cellpadding="0">
+                            <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th colspan="5">实物图片</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table3">
+                                <tr>
+                                    <td width="50">1</td>
+                                    <td colspan="5">
+                                        <img class="img" src="./demo.jpeg" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="html2canvas.min.js"></script>
+    <script src="jsPDF.js"></script>
+    <script src="index.js"></script>
+</html>
