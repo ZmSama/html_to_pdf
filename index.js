@@ -11,7 +11,7 @@
 function fillDataHandler() {
     // 给表格1插入20条数据
     const table1 = document.querySelector('#table1')
-    const table1Str = Array(20)
+    const table1Str = Array(40)
         .fill(null)
         .map((_, i) => {
             return `
@@ -30,7 +30,7 @@ function fillDataHandler() {
 
     // 给表格2插入40条数据
     const table2 = document.querySelector('#table2')
-    const table2Str = Array(40)
+    const table2Str = Array(8)
         .fill(null)
         .map((_, i) => {
             return `
@@ -49,7 +49,7 @@ function fillDataHandler() {
 
     // 给表格三插入内容
     const table3 = document.querySelector('#table3')
-    const table3Str = Array(4)
+    const table3Str = Array(10)
         .fill(null)
         .map((_, i) => {
             return `
@@ -92,8 +92,7 @@ function getPDF(html, title) {
         // 按照比例计算出当前A4纸应该截取的canvas高度，因为比例是一样的，A4的宽比上canvas的宽等于A4的高比上canvas的高
         // 因为canvas的单位和jsPDF所需要的单位是不一样的，需要进行比例转换
         let onePageHeight = Math.floor((canvas.width / a4Width) * a4Height) //pdf页面偏移
-        // 记录生成多少页
-        let pageIndex = 0
+        // pdfjs的配置
         const options = {
             orientation: 'p',
             unit: 'mm',
@@ -120,7 +119,6 @@ function getPDF(html, title) {
         }
         // 递归函数，超过一页将走这里
         function createPage() {
-            pageIndex++
             // 如果原始canvas的高度已经被分割完了，直接退出
             if (originHeight.length <= 0) {
                 return
@@ -159,17 +157,19 @@ function getPDF(html, title) {
                     (a4Width / canvas.width) * realHeight
                 )
             }
-            // 分到最后的一份的时候会多出一个空白页，所以需要删除
-            if (realHeight === 0) {
-                // 这个pageIndex会记录页数，刚好最后一页就是空白的，删除即可，注意索引问题
-                pdf.deletePage(pageIndex)
-            }
             // 记录这个每次计算的页高度，每次截取一段真实高度之后要记录起来，用于算下下一章的真实高度
             pagePosition += realHeight
             // 减少原始canvas高度，代表被截取了
             originHeight -= realHeight
+
+            // 可运行查看这个打印三个高度，无论如何修改，最后页面剩余高度就是2，所以我移除了原本的删除页面的逻辑，采用这个作为递归出口
+            console.log('当前渲染的页高度', realHeight)
+            console.log('此时页面还剩余高度', originHeight)
+            console.log('此时已经全部渲染的高度', pagePosition)
+
             // 如果原始canvas还是有高度，那么递归深入
-            if (realHeight > 0 && originHeight > 0) {
+            // tips: 经过多次测试发现，在最后一页渲染完毕的时候，这个originHeight永远会等于2，无论修改canvas的scale还是dom的样式，我猜测是canvas原始高度的头和尾的两个像素点
+            if (realHeight > 0 && originHeight > 2) {
                 // 先添加一页空白pdf
                 pdf.addPage()
                 // 再进行下一页的判断
